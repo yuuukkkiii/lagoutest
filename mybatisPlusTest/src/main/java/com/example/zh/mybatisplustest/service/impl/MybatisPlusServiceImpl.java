@@ -1,8 +1,10 @@
 package com.example.zh.mybatisplustest.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.zh.mybatisplustest.base.BaseResponse;
 import com.example.zh.mybatisplustest.base.MultiResp;
@@ -16,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: zhaih
@@ -61,6 +66,24 @@ public class MybatisPlusServiceImpl implements MybatisPlusService {
             return BaseResponse.success(JSON.toJSONString(userBaseService.page(page).getRecords()));
         }else if(code==8){/*计数*/
             return BaseResponse.success(String.valueOf(userBaseService.count()));
+        }
+        return null;
+    }
+
+    @Override
+    public BaseResponse<String> selectChain(UserBaseReq req) {
+        Integer code=req.getCode();
+        UserInfoBase target=new UserInfoBase();
+        BeanUtils.copyProperties(req,target);
+        List<UserInfoBase> list=new ArrayList<>();
+        JSONArray array =new JSONArray();
+        if(code==null){/*失败的情况*/
+            return BaseResponse.fail(ResponseEnum.RESP_1.getCode(),ResponseEnum.RESP_1.getMsg());
+        }else if(code==0){/*query by ID*/
+            list.add(userBaseService.query().eq("id",1).one());
+            list.add(userBaseService.lambdaQuery().eq(UserInfoBase::getId,1).one());
+            array.addAll(list);
+            return BaseResponse.success(array.toJSONString());
         }
         return null;
     }

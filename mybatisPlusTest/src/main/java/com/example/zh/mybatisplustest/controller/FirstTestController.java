@@ -24,5 +24,8 @@ public class FirstTestController {
     public BaseResponse<String> selectTest(@RequestBody UserBaseReq req){
         return mybatisPlusService.selectResult(req);
     }
-
+    @PostMapping("/selectChain")
+    public BaseResponse<String> selectChain(@RequestBody UserBaseReq req){
+        return mybatisPlusService.selectChain(req);
+    }
 }
