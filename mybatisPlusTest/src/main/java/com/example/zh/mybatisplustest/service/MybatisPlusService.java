@@ -1,6 +1,7 @@
 package com.example.zh.mybatisplustest.service;
 
 import com.example.zh.mybatisplustest.base.BaseResponse;
+import com.example.zh.mybatisplustest.dto.req.UserBaseReq;
 
 /**
  * @Author: zhaih
@@ -9,5 +10,7 @@ import com.example.zh.mybatisplustest.base.BaseResponse;
  * @Description:
  */
 public interface MybatisPlusService {
-    public BaseResponse<String> selectResult();
+    public BaseResponse<String> selectResult(UserBaseReq req);
+    public BaseResponse<String> selectChain(UserBaseReq req);
+    public BaseResponse<String> selectWrapper(UserBaseReq req);
 }
