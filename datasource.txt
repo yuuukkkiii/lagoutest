@@ -1,0 +1,20 @@
+CREATE TABLE `user_info_base` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `user_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户姓名',
+  `gender` int DEFAULT NULL COMMENT '性别',
+  `birthday` datetime DEFAULT NULL COMMENT '生日',
+  `age` int DEFAULT NULL COMMENT '年龄',
+  `pro_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '籍贯省份',
+  `city_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '籍贯城市',
+  `phone_num` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '手机号',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO workspace.user_info_base (id,user_name,gender,birthday,age,pro_id,city_id,phone_num,create_time,update_time) VALUES
+	 (1,'小夫',0,NULL,12,NULL,NULL,'66666666','2022-01-25 16:48:25.0','2022-01-25 16:48:25.0'),
+	 (2,'哇哈哈',1,'2000-09-28 08:00:00.0',22,NULL,NULL,'88888888','2022-02-07 11:43:40.0','2022-02-07 14:25:25.0'),
+	 (3,'哇哈哈',1,'2000-09-28 08:00:00.0',22,NULL,NULL,'88888888','2022-02-07 14:06:05.0','2022-02-07 14:30:12.0'),
+	 (4,'哇哈哈',1,'2000-09-28 08:00:00.0',22,NULL,NULL,'88888888','2022-02-07 14:06:16.0','2022-02-07 14:25:25.0'),
+	 (5,'哇哈哈',1,'2000-09-28 08:00:00.0',22,NULL,NULL,'88888888','2022-02-07 14:14:21.0','2022-02-07 14:25:25.0');
