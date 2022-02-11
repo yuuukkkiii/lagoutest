@@ -12,5 +12,5 @@ import com.example.zh.mybatisplustest.dto.req.UserBaseReq;
 public interface MybatisPlusService {
     public BaseResponse<String> selectResult(UserBaseReq req);
     public BaseResponse<String> selectChain(UserBaseReq req);
-
+    public BaseResponse<String> selectWrapper(UserBaseReq req);
 }
