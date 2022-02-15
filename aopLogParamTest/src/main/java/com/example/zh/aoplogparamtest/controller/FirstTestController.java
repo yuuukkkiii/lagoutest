@@ -41,13 +41,14 @@ public class FirstTestController {
     }
 
     /**
+     *
      * @return 检查参数
      */
     @ReqLog
     @GetMapping("/getParam/{id}")
     public BaseResponse<String> getParam(@PathVariable("id") String id){
         System.out.println("id====="+ id);
-        return BaseResponse.success("success_param");
+        return BaseResponse.success("success_param：   "+id);
     }
 
     /**

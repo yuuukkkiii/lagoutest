@@ -16,6 +16,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Aspect
+@Order(0)
 public class ReqLogAspect {
     @Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping)")
     private void logAdvicePointcut() {}
