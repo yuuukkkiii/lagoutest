@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.zh.aoplogparamtest.mapper.UserInfoReqLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.zh.aoplogparamtest.entity.UserInfoReqLog">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="timeFlag" column="time_flag" jdbcType="BIGINT"/>
+            <result property="userCode" column="user_code" jdbcType="VARCHAR"/>
+            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="requestName" column="request_name" jdbcType="VARCHAR"/>
+            <result property="paramName" column="param_name" jdbcType="VARCHAR"/>
+            <result property="paramIndex" column="param_index" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,time_flag,user_code,
+        user_name,request_name,param_name,
+        param_index
+    </sql>
+</mapper>
