@@ -9,17 +9,26 @@ package com.example.zh.aoplogparamtest.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.zh.aoplogparamtest.base.BaseResponse;
 import com.example.zh.aoplogparamtest.dto.req.UserBaseReq;
+import com.example.zh.aoplogparamtest.entity.UserInfoReqLog;
+import com.example.zh.aoplogparamtest.mapper.UserInfoReqLogMapper;
+import com.example.zh.aoplogparamtest.service.UserInfoReqLogService;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -27,6 +36,12 @@ import java.util.stream.Collectors;
 @Aspect
 @Order(0)
 public class ReqLogAspect {
+    @Autowired
+    UserInfoReqLogMapper logMapper;
+
+    @Autowired
+    UserInfoReqLogService logService;
+
     @Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping)")
     private void logAdvicePointcut() {}
 
@@ -85,14 +100,43 @@ public class ReqLogAspect {
         System.out.println("========进入切面========");
         Object[] objects =joinPoint.getArgs();
         int index=0;
+        ServletRequestAttributes attributes= (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request=attributes.getRequest();
+        String url =request.getRequestURI();
+        List<UserInfoReqLog> logList=new ArrayList<>();
         for(Object obj:objects){
+            UserInfoReqLog l=new UserInfoReqLog();
+            l.setTimeFlag(Instant.now().getEpochSecond());
+            l.setRequestName(url);
+            l.setParamIndex(obj.toString());
+            l.setUserIp(request.getRemoteAddr());
+            logList.add(l);
             System.out.println("参数列表--参数"+(index++)+"       "+obj);
         }
+        logService.saveBatch(logList);
         objects[0]="小红";
         objects[1]=4;
         return joinPoint.proceed(objects);
     }
 
+    /**
+     * @param joinPoint 切点
+     * @param res 返回值
+     * 其中returning的值与返回值的名称一致，即可以获得返回值
+     */
+    @AfterReturning(value = "payloadPointcut()",returning = "res")
+    public void afterAdvice(JoinPoint joinPoint, BaseResponse<String> res) throws Throwable{
+        System.out.println("========进入切面after========");
+        ServletRequestAttributes attributes= (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request=attributes.getRequest();
+        String url =request.getRequestURI();
+        UserInfoReqLog l=new UserInfoReqLog();
+        l.setTimeFlag(Instant.now().getEpochSecond());
+        l.setRequestName(url);
+        l.setParamIndex(res.getData());
+        l.setUserIp(request.getRemoteAddr());
+        logService.save(l);
+    }
 
     /**
      * 定义切面

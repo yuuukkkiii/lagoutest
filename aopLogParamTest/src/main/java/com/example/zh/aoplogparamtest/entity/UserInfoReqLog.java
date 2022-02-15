@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * 
  * @TableName user_info_req_log
  */
+@Data
 @TableName(value ="user_info_req_log")
 public class UserInfoReqLog implements Serializable {
     /**
@@ -48,106 +51,11 @@ public class UserInfoReqLog implements Serializable {
      */
     private String paramIndex;
 
+
+    private String userIp;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * 
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * 
-     */
-    public Long getTimeFlag() {
-        return timeFlag;
-    }
-
-    /**
-     * 
-     */
-    public void setTimeFlag(Long timeFlag) {
-        this.timeFlag = timeFlag;
-    }
-
-    /**
-     * 
-     */
-    public String getUserCode() {
-        return userCode;
-    }
-
-    /**
-     * 
-     */
-    public void setUserCode(String userCode) {
-        this.userCode = userCode;
-    }
-
-    /**
-     * 
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * 
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    /**
-     * 
-     */
-    public String getRequestName() {
-        return requestName;
-    }
-
-    /**
-     * 
-     */
-    public void setRequestName(String requestName) {
-        this.requestName = requestName;
-    }
-
-    /**
-     * 
-     */
-    public String getParamName() {
-        return paramName;
-    }
-
-    /**
-     * 
-     */
-    public void setParamName(String paramName) {
-        this.paramName = paramName;
-    }
-
-    /**
-     * 
-     */
-    public String getParamIndex() {
-        return paramIndex;
-    }
-
-    /**
-     * 
-     */
-    public void setParamIndex(String paramIndex) {
-        this.paramIndex = paramIndex;
-    }
 
     @Override
     public boolean equals(Object that) {

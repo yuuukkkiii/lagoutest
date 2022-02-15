@@ -61,7 +61,7 @@ public class FirstTestController {
     public BaseResponse<String> getParamPayLoad(@RequestParam String name,
                                                 @RequestParam Integer id){
         System.out.println("id====="+ id+"   ==name==   "+name);
-        return BaseResponse.success("success_param");
+        return BaseResponse.success("success_param"+id+"----"+name);
     }
 
     /**
@@ -75,6 +75,10 @@ public class FirstTestController {
         return BaseResponse.success("success_postParam");
     }
 
+    /**
+     * @param id 入参
+     * @return joinPoint的基本使用
+     */
     @JoinPointTest
     @GetMapping("/joinPointTest")
     public BaseResponse<String> joinPointTestController(@RequestParam String id){
