@@ -42,8 +42,8 @@ public class MyExceptionHandler {
         return map;
     }
 
-    @ExceptionHandler({SecondException.class})
-    public Map<String,Object> secondException(SecondException e){
+    @ExceptionHandler({TokenException.class})
+    public Map<String,Object> secondException(TokenException e){
         Map<String,Object> map =new HashMap<>();
         map.put("code", e.getCode());
         map.put("msg",e.getMsg());

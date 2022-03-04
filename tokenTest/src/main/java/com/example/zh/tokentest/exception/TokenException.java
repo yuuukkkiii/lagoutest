@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class SecondException extends RuntimeException{
+public class TokenException extends RuntimeException{
     private int code;
 
     private String msg;
 
-    public SecondException(int code,String msg){
+    public TokenException(int code, String msg){
         this.code=code;
         this.msg=msg;
     }
