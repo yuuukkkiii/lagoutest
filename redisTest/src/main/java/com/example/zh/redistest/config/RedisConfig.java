@@ -42,6 +42,8 @@ public class RedisConfig {
         om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
         jacksonSerial.setObjectMapper(om);
 
+//        键序列化
+        template.setKeySerializer(new StringRedisSerializer());
         // 值采用json序列化
         template.setValueSerializer(jacksonSerial);
 
