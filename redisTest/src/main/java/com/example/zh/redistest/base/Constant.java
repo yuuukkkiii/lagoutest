@@ -8,4 +8,6 @@ package com.example.zh.redistest.base;
  */
 public class Constant {
     public static final Long MAX_ALIVE=3000L;
+
+    public static final String REDIS_PREFIX="redis_test:";
 }

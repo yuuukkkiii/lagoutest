@@ -32,7 +32,7 @@ public class RedisController {
 
     @GetMapping("/test/{id}")
     public UserInfoBase redisTest(@PathVariable("id") Integer id){
-        String key="redis_test:"+id;
+        String key=Constant.REDIS_PREFIX+id;
         UserInfoBase userInfoBase;
         if(redisUtil.hasKey(key)){
             long time=redisUtil.getExpire(key);
