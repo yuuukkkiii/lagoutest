@@ -1,7 +1,9 @@
 package com.example.zh.redistest.aop;
 
 import com.example.zh.redistest.base.Constant;
+import com.example.zh.redistest.entity.UserInfoBase;
 import com.example.zh.redistest.utils.RedisUtil;
+import com.github.benmanes.caffeine.cache.Cache;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,17 +29,25 @@ public class LocalTestAspect {
     RedisUtil redisUtil;
 
     @Autowired
-    ValueOperations valueOperations;
+    ValueOperations<String,Object> valueOperations;
+
+    @Autowired
+    Cache<String,Object> caffeineCache;
 
     @Pointcut("@annotation(com.example.zh.redistest.aop.LocalTest)")
     private void localTest(){}
 
     @Around("localTest()")
-    public Object localTestAround(ProceedingJoinPoint joinPoint){
+    public Object localTestAround(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("===进入切面===");
         Object [] objects=joinPoint.getArgs();
         Integer id= (Integer) objects[0];
         String key= Constant.REDIS_PREFIX+id;
-        return null;
+        UserInfoBase userInfoBase=(UserInfoBase) caffeineCache.getIfPresent(key);
+        if(userInfoBase==null){
+            return joinPoint.proceed(objects);
+        }else{
+            return userInfoBase;
+        }
     }
 }

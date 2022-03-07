@@ -1,11 +1,14 @@
 package com.example.zh.redistest.controller;
 
+import com.example.zh.redistest.aop.LocalTest;
 import com.example.zh.redistest.base.Constant;
 import com.example.zh.redistest.entity.UserInfoBase;
 import com.example.zh.redistest.service.UserBaseService;
 import com.example.zh.redistest.utils.RedisUtil;
+import com.github.benmanes.caffeine.cache.Cache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +33,10 @@ public class RedisController {
     @Autowired
     private UserBaseService userBaseService;
 
+    @Autowired
+    Cache<String,Object> cache;
+
+    @LocalTest
     @GetMapping("/test/{id}")
     public UserInfoBase redisTest(@PathVariable("id") Integer id){
         String key=Constant.REDIS_PREFIX+id;
@@ -51,6 +58,7 @@ public class RedisController {
             userInfoBase=userBaseService.getById(id);
             redisUtil.set(key,userInfoBase);
             redisUtil.expire(key,120L);
+            cache.put(key,userInfoBase);
             return userInfoBase;
         }
     }
